@@ -84,14 +84,17 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
+        if (id == R.id.nav_news) {
+            // 新闻资讯
             // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
-
-        } else if (id == R.id.nav_slideshow) {
-
-        } else if (id == R.id.nav_manage) {
-
+        } else if (id == R.id.nav_home) {
+            // 知乎豆瓣
+        } else if (id == R.id.nav_todayofhistory) {
+            // 历史上的今天
+        } else if (id == R.id.nav_chat) {
+            // 聊天机器人
+        }else if(id == R.id.nav_weather){
+            // 城市天气
         } else if (id == R.id.nav_share) {
 
         } else if (id == R.id.nav_send) {

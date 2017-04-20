@@ -3,33 +3,37 @@
 
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/nav_camera"
-            android:icon="@drawable/ic_menu_camera"
-            android:title="Import" />
+            android:id="@+id/nav_news"
+            android:icon="@drawable/icon_news"
+            android:title="新闻资讯" />
         <item
-            android:id="@+id/nav_gallery"
-            android:icon="@drawable/ic_menu_gallery"
-            android:title="Gallery" />
+            android:id="@+id/nav_home"
+            android:icon="@drawable/icon_read"
+            android:title="知乎豆瓣" />
         <item
-            android:id="@+id/nav_slideshow"
-            android:icon="@drawable/ic_menu_slideshow"
-            android:title="Slideshow" />
+            android:id="@+id/nav_todayofhistory"
+            android:icon="@drawable/icon_historyoftoday"
+            android:title="历史上的今天" />
         <item
-            android:id="@+id/nav_manage"
-            android:icon="@drawable/ic_menu_manage"
-            android:title="Tools" />
+            android:id="@+id/nav_chat"
+            android:icon="@drawable/icon_chat"
+            android:title="聊天机器人" />
+        <item
+            android:id="@+id/nav_weather"
+            android:icon="@drawable/icon_weather"
+            android:title="城市天气" />
     </group>
 
-    <item android:title="Communicate">
+    <item android:title="其他设置">
         <menu>
             <item
                 android:id="@+id/nav_share"
-                android:icon="@drawable/ic_menu_share"
-                android:title="Share" />
+                android:icon="@drawable/icon_setting"
+                android:title="设置" />
             <item
                 android:id="@+id/nav_send"
-                android:icon="@drawable/ic_menu_send"
-                android:title="Send" />
+                android:icon="@drawable/icon_about"
+                android:title="关于" />
         </menu>
     </item>
 
