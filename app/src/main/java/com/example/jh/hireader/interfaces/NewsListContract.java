@@ -18,7 +18,7 @@ public interface NewsListContract {
         void showError();
         void showResult(List<NewsBean.ShowapiResBodyBean.PagebeanBean.ContentlistBean> list);
     }
-    interface  Presenter extends BasePresenter {
+    interface Presenter extends BasePresenter {
         void request(String type,int page,String time,boolean clearing);
         void loadMore(String type,String time);
         void refresh(String type,String time);

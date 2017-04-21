@@ -41,9 +41,10 @@ public class NewsListFragment extends BaseFragment implements NewsListContract.V
 
     private boolean isPreper;// 标识fragment视图已经初始化完毕
     private boolean hasFetchData;// 标识已经触发过懒加载数据
-    private int pager =1;
+    private int pager = 1;
     private DateFormatUtils dateFomatter;
-    public static NewsListFragment getInstance(String type){
+
+    public static NewsListFragment getInstance(String type) {
         Bundle args = new Bundle();
         NewsListFragment fragment = new NewsListFragment();
         args.putString("type", type);
@@ -60,8 +61,8 @@ public class NewsListFragment extends BaseFragment implements NewsListContract.V
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_content,container,false);
-        newsListPresenter = new NewsListPresenter(getContext(),this);
+        View view = inflater.inflate(R.layout.fragment_content, container, false);
+        newsListPresenter = new NewsListPresenter(getContext(), this);
         mType = getArguments().getString("type");
         initView(view);
         isPreper = true;
@@ -69,23 +70,24 @@ public class NewsListFragment extends BaseFragment implements NewsListContract.V
         dateFomatter = new DateFormatUtils();  // 初始化
 
 //        Logger.d("dddddddddddddddddddddddddddddddddddd");
-        presenter.request(mType,1,dateFomatter.NewsDateFormat(),true);
+        presenter.request(mType, 1, dateFomatter.NewsDateFormat(), true);
         mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                presenter.refresh(mType,dateFomatter.NewsDateFormat());
+                presenter.refresh(mType, dateFomatter.NewsDateFormat());
             }
         });
         mRecyclerView.setOnScrollListener(new RecyclerView.OnScrollListener() {
             boolean isSlidingToFooter = false;
+
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-                LinearLayoutManager linearLayoutManager = (LinearLayoutManager)mRecyclerView.getLayoutManager();
-                if(newState == RecyclerView.SCROLL_STATE_IDLE){
+                LinearLayoutManager linearLayoutManager = (LinearLayoutManager) mRecyclerView.getLayoutManager();
+                if (newState == RecyclerView.SCROLL_STATE_IDLE) {
                     int lastVisibleItem = linearLayoutManager.findLastCompletelyVisibleItemPosition();
                     int totalItemCount = linearLayoutManager.getItemCount();
-                    if(lastVisibleItem == (totalItemCount-1)&&isSlidingToFooter){
-                        presenter.loadMore(mType,dateFomatter.NewsDateFormat());
+                    if (lastVisibleItem == (totalItemCount - 1) && isSlidingToFooter) {
+                        presenter.loadMore(mType, dateFomatter.NewsDateFormat());
                     }
                 }
                 super.onScrollStateChanged(recyclerView, newState);
@@ -94,7 +96,7 @@ public class NewsListFragment extends BaseFragment implements NewsListContract.V
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
-                isSlidingToFooter = dy>0;
+                isSlidingToFooter = dy > 0;
             }
         });
         return view;
@@ -132,11 +134,11 @@ public class NewsListFragment extends BaseFragment implements NewsListContract.V
     @Override
     public void showError() {
         Logger.d(mType);
-        Snackbar.make(mSwipeRefreshLayout, "加载失败",Snackbar.LENGTH_INDEFINITE)
+        Snackbar.make(mSwipeRefreshLayout, "加载失败", Snackbar.LENGTH_INDEFINITE)
                 .setAction("重试", new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        presenter.request(mType,1,dateFomatter.NewsDateFormat(),true);
+                        presenter.request(mType, 1, dateFomatter.NewsDateFormat(), true);
 
                     }
                 })
@@ -146,8 +148,8 @@ public class NewsListFragment extends BaseFragment implements NewsListContract.V
     @Override
     public void showResult(List<NewsBean.ShowapiResBodyBean.PagebeanBean.ContentlistBean> list) {
 //        Logger.d(""+list.size());
-        if(newsListAdapter==null){
-            newsListAdapter = new NewsListAdapter(getContext(),list);
+        if (newsListAdapter == null) {
+            newsListAdapter = new NewsListAdapter(getContext(), list);
             newsListAdapter.setItemClickListener(new OnRecyclerViewOnClickListener() {
                 @Override
                 public void onItemClick(View v, int position) {
@@ -155,7 +157,7 @@ public class NewsListFragment extends BaseFragment implements NewsListContract.V
                 }
             });
             mRecyclerView.setAdapter(newsListAdapter);
-        }else{
+        } else {
             newsListAdapter.notifyDataSetChanged();
         }
     }
@@ -170,22 +172,23 @@ public class NewsListFragment extends BaseFragment implements NewsListContract.V
 
     @Override
     public void setPresenter(NewsListContract.Presenter presenter) {
-        if(presenter!=null){
+        if (presenter != null) {
             this.presenter = presenter;
         }
     }
 
     @Override
     public void initView(View view) {
-        mSwipeRefreshLayout = (SwipeRefreshLayout)view.findViewById(R.id.fragment_content_swiperefreshlayout);
-        mRecyclerView = (RecyclerView)view.findViewById(R.id.fragment_content_recyclerview);
+        mSwipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.fragment_content_swiperefreshlayout);
+        mRecyclerView = (RecyclerView) view.findViewById(R.id.fragment_content_recyclerview);
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
         mSwipeRefreshLayout.setColorSchemeResources(R.color.colorPrimary);
-        floatingActionButton = (FloatingActionButton)getActivity().findViewById(R.id.fragment_main_fab);
+        floatingActionButton = (FloatingActionButton) getActivity().findViewById(R.id.fragment_main_fab);
         floatingActionButton.hide();
     }
+
     /*  @Override
       public void setUserVisibleHint(boolean isVisibleToUser) {
           super.setUserVisibleHint(isVisibleToUser);
@@ -200,14 +203,14 @@ public class NewsListFragment extends BaseFragment implements NewsListContract.V
             hasFetchData = true; //已加载过数据
             // lazyFetchData();
 //        Logger.d("dddddddddddddddddddddddddddddddddddd");
-            presenter.request(mType,1,dateFomatter.NewsDateFormat(),true);
+            presenter.request(mType, 1, dateFomatter.NewsDateFormat(), true);
         }
     }
 
     @Override
     public void onDestroyView() {
         // onPause();
-        newsListAdapter=null;
+        newsListAdapter = null;
         super.onDestroyView();
         hasFetchData = false;
         isPreper = false;

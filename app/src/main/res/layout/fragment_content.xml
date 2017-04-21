@@ -12,9 +12,9 @@
         android:clickable="true">
 
         <android.support.v7.widget.RecyclerView
+            android:id="@+id/fragment_content_recyclerview"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:id="@+id/fragment_content_recyclerview"
             android:scrollbars="vertical"
             android:scrollbarFadeDuration="1"
             android:fadeScrollbars="true"/>

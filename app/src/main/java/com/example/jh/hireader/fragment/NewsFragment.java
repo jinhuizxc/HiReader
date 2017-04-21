@@ -58,7 +58,7 @@ public class NewsFragment extends Fragment {
         viewPager = (ViewPager)view.findViewById(R.id.fragment_main_viewpager);
         viewPager.setOffscreenPageLimit(4);
         floatingActionButton = (FloatingActionButton)view.findViewById(R.id.fragment_main_fab);
-        floatingActionButton.hide();
+        floatingActionButton.hide();        // 隐藏FloatingActionButton
         NewsPagerAdapter newsPagerAdapter = new NewsPagerAdapter(getChildFragmentManager());
         newsPagerAdapter.addFragment(NewsListFragment.getInstance(TYPE_DOMESTIC),TYPE_DOMESTIC);
         newsPagerAdapter.addFragment(NewsListFragment.getInstance(TYPE_INTERNETIONAL),TYPE_INTERNETIONAL);

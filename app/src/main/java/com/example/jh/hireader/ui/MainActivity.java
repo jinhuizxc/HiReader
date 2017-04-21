@@ -15,6 +15,7 @@ import android.view.MenuItem;
 import com.example.jh.hireader.R;
 import com.example.jh.hireader.fragment.ChatFragment;
 import com.example.jh.hireader.fragment.NewsFragment;
+import com.example.jh.hireader.fragment.ZhihuGuokrMainFragment;
 
 /**
  * 目前项目buildToolsVersion "25.0.2",没有25.0.3版本达不到
@@ -29,6 +30,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private Toolbar toolbar;
     private DrawerLayout drawerLayout;
     private NavigationView navigationView;
+    // 知乎果壳
+    private ZhihuGuokrMainFragment zhihuGuokrMainFragment;
     // 新闻资讯
     private NewsFragment newsFragment;
     //聊天机器人
@@ -39,11 +42,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         initView();
+        // fragment对象的初始化以及添加fragment到布局中
         chatFragment = ChatFragment.newIntance();
         newsFragment = NewsFragment.newInstance();
+        zhihuGuokrMainFragment = ZhihuGuokrMainFragment.newInstance();
         // 添加Fragment 到 FrameLayout
         if (!newsFragment.isAdded()) {
             getSupportFragmentManager().beginTransaction().add(R.id.fl, newsFragment, "newsFragment").commit();
+        }
+        if(!zhihuGuokrMainFragment.isAdded()){
+            getSupportFragmentManager().beginTransaction().add(R.id.fl, zhihuGuokrMainFragment,"MainFragment").commit();
         }
         if (!chatFragment.isAdded()) {     // main_container
             getSupportFragmentManager().beginTransaction().add(R.id.fl, chatFragment, "chatFragment").commit();
@@ -69,7 +77,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 this, drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawerLayout.setDrawerListener(toggle);
         toggle.syncState();
-        // 添加上这句是为了让用户认为这里就是新闻资讯界面
+        // 更改actionbar设置为title
         ActionBar actionBar = getSupportActionBar();
         actionBar.setTitle("新闻资讯");
         navigationView = (NavigationView) findViewById(R.id.nav_view);
@@ -119,6 +127,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             // Handle the camera action
         } else if (id == R.id.nav_home) {
             // 知乎豆瓣
+            showMainFragment();
         } else if (id == R.id.nav_todayofhistory) {
             // 历史上的今天
         } else if (id == R.id.nav_chat) {
@@ -142,12 +151,22 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.show(newsFragment);
         fragmentTransaction.hide(chatFragment);
-//        fragmentTransaction.hide(zhihuGuokrMainFragment);
+        fragmentTransaction.hide(zhihuGuokrMainFragment);
 //        fragmentTransaction.hide(todayOfHistoryFragment);
 //        fragmentTransaction.hide(weatherFragment);
         fragmentTransaction.commit();
-
         toolbar.setTitle("新闻资讯");
+    }
+
+    private void showMainFragment() {
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.show(zhihuGuokrMainFragment);
+//        fragmentTransaction.hide(todayOfHistoryFragment);
+        fragmentTransaction.hide(newsFragment);
+        fragmentTransaction.hide(chatFragment);
+//        fragmentTransaction.hide(weatherFragment);
+        fragmentTransaction.commit();
+        toolbar.setTitle("知乎果壳");
     }
 
     private void showChatFragment() {
@@ -155,7 +174,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         fragmentTransaction.show(chatFragment);
         fragmentTransaction.hide(newsFragment);
 //        fragmentTransaction.hide(todayOfHistoryFragment);
-//        fragmentTransaction.hide(zhihuGuokrMainFragment);
+        fragmentTransaction.hide(zhihuGuokrMainFragment);
 //        fragmentTransaction.hide(weatherFragment);
         fragmentTransaction.commit();
 

@@ -1,5 +1,6 @@
 package com.example.jh.hireader.api;
 
+import com.example.jh.hireader.bean.ZhihuDailyBean;
 import com.example.jh.hireader.chat.bean.ChatBean;
 import com.example.jh.hireader.news.NewsBean;
 import com.example.jh.hireader.zhihudetail.ZhihuDetailBean;
@@ -24,4 +25,6 @@ public interface ApiService {
     Observable<NewsBean> getNews(@Query("channelName") String type, @Query("page") int page, @Query("showapi_timestamp") String time);
     @GET("api/4/news/{id}")
     Observable<ZhihuDetailBean> getZhihuDetailNews(@Path("id") String id);
+    @GET("api/4/news/before/{date}")
+    Observable<ZhihuDailyBean> getZhihuDaily(@Path("date") String date);
 }

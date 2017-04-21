@@ -44,6 +44,7 @@ dependencies {
     compile 'com.squareup.okhttp3:logging-interceptor:3.4.1'
     compile 'com.orhanobut:logger:1.15'
     compile 'com.github.bumptech.glide:glide:3.7.0'
+    // 时间对话框dateTimePicker
     compile 'com.wdullaer:materialdatetimepicker:2.5.0'
     compile 'com.github.jrvansuita:MaterialAbout:+'
 }

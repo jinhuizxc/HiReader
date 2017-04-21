@@ -35,7 +35,6 @@
         android:layout_marginBottom="16dp"
         android:layout_marginEnd="@dimen/activity_horizontal_margin"
         android:layout_marginRight="@dimen/activity_horizontal_margin"
-
         android:src="@drawable/rili"
         app:backgroundTint="@color/colorPrimary"
         app:borderWidth="0dp"

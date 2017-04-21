@@ -25,6 +25,7 @@ import io.reactivex.schedulers.Schedulers;
  */
 
 public class NewsListPresenter implements NewsListContract.Presenter {
+
     private final Context context;
     private final NewsListContract.View view;
     private int mPager =1;
