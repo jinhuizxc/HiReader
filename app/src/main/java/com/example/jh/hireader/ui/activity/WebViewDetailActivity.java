@@ -102,9 +102,6 @@ public class WebViewDetailActivity extends AppCompatActivity {
                 mUrl = url;
                 mWebView.loadUrl(url);
                 break;
-            case BeanType.TYPE_HISTORY:
-
-                break;
             case BeanType.TYPE_NEWS:
                 id = intent.getStringExtra("link");
                 mUrl = id;

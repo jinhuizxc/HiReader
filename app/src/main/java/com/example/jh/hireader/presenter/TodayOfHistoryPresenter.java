@@ -95,7 +95,6 @@ public class TodayOfHistoryPresenter implements TodayOfHistoryContract.Presenter
     @Override
     public void loadDetail(int position) {
         context.startActivity(new Intent(context, TodayOfHistoryDetailActivity.class)
-                .putExtra("type", BeanType.TYPE_HISTORY)
                 .putExtra("title",list.get(position).getTitle())
                 .putExtra("id", list.get(position).get_id()));
     }

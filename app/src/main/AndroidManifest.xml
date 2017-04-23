@@ -42,6 +42,8 @@
         </activity>
         <activity android:name=".ui.activity.WebViewDetailActivity"/>
         <activity android:name=".ui.activity.TodayOfHistoryDetailActivity"/>
+        <activity android:name=".ui.activity.SettingActivity"/>
+        <activity android:name=".ui.activity.AboutActivity"/>
     </application>
 
 </manifest>
