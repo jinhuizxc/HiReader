@@ -1,10 +1,8 @@
-package com.example.jh.hireader.fragment;
+package com.example.jh.hireader.ui.fragment;
 
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -16,7 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.jh.hireader.R;
-import com.example.jh.hireader.adapter.ZhihuDailyAdapter;
+import com.example.jh.hireader.ui.adapter.ZhihuDailyAdapter;
 import com.example.jh.hireader.bean.StoriesBean;
 import com.example.jh.hireader.interfaces.OnRecyclerViewOnClickListener;
 import com.example.jh.hireader.interfaces.ZhihuDailyContract;
@@ -38,7 +36,7 @@ public class ZhihuDailyFragment extends Fragment implements ZhihuDailyContract.V
     private SwipeRefreshLayout mSwipeRefreshLayout;
     private LinearLayoutManager layoutManager;
     // 用getActivity()找到 FloatingActionButton
-    private FloatingActionButton mFloatingActionButton;
+//    private FloatingActionButton mFloatingActionButton;
     private TabLayout mTabLayout;
     // 获取当前年月日
     private int mYear = Calendar.getInstance().get(Calendar.YEAR);
@@ -90,22 +88,22 @@ public class ZhihuDailyFragment extends Fragment implements ZhihuDailyContract.V
                 Log.e(TAG, "onScrolled 方法被执行");
                 isSlidingToFooter = dy > 0; // isSlidingToFooter = true
                 if (dy > 0) {
-                    mFloatingActionButton.hide();
+//                    mFloatingActionButton.hide();
                 } else {
-                    mFloatingActionButton.show();
+//                    mFloatingActionButton.show();
                 }
             }
         });
-        // 点击事件
-        mFloatingActionButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.e(TAG, "onClick 方法被执行");
-                if (mTabLayout.getSelectedTabPosition() == 0) {
-                    showPickerDialog();
-                }
-            }
-        });
+//        // 点击事件
+//        mFloatingActionButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Log.e(TAG, "onClick 方法被执行");
+//                if (mTabLayout.getSelectedTabPosition() == 0) {
+//                    showPickerDialog();
+//                }
+//            }
+//        });
         return view;
     }
 
@@ -131,14 +129,14 @@ public class ZhihuDailyFragment extends Fragment implements ZhihuDailyContract.V
 
     @Override
     public void showError() {
-        Snackbar.make(mFloatingActionButton, "加载失败", Snackbar.LENGTH_INDEFINITE)
-                .setAction("重试", new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        presenter.refresh();
-                    }
-                })
-                .show();
+//        Snackbar.make(mFloatingActionButton, "加载失败", Snackbar.LENGTH_INDEFINITE)
+//                .setAction("重试", new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View v) {
+//                        presenter.refresh();
+//                    }
+//                })
+//                .show();
     }
 
     @Override
@@ -149,7 +147,7 @@ public class ZhihuDailyFragment extends Fragment implements ZhihuDailyContract.V
                 @Override
                 public void onItemClick(View v, int position) {
                     //点击列表事件
-//                    presenter.loadDetail(position);
+                    presenter.loadDetail(position);
                 }
             });
             mRecyclerView.setAdapter(zhihuDailyAdapter);
@@ -205,7 +203,7 @@ public class ZhihuDailyFragment extends Fragment implements ZhihuDailyContract.V
         layoutManager = new LinearLayoutManager(getContext());
         mRecyclerView.setLayoutManager(layoutManager);
         mSwipeRefreshLayout.setColorSchemeResources(R.color.colorPrimary);
-        mFloatingActionButton = (FloatingActionButton) getActivity().findViewById(R.id.fragment_main_fab);
+//        mFloatingActionButton = (FloatingActionButton) getActivity().findViewById(R.id.fragment_main_fab);
         mTabLayout = (TabLayout) getActivity().findViewById(R.id.fragment_main_tablayout);
     }
 }

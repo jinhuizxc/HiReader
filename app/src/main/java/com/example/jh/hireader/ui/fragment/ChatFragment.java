@@ -1,4 +1,4 @@
-package com.example.jh.hireader.fragment;
+package com.example.jh.hireader.ui.fragment;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -14,7 +14,7 @@ import android.widget.EditText;
 
 import com.example.jh.hireader.R;
 import com.example.jh.hireader.chat.ChatContract;
-import com.example.jh.hireader.adapter.ChatAdapter;
+import com.example.jh.hireader.ui.adapter.ChatAdapter;
 import com.example.jh.hireader.chat.bean.ChatMsgBean;
 import com.example.jh.hireader.presenter.ChatPresenter;
 

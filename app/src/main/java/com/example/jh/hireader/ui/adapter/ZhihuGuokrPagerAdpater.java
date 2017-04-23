@@ -1,12 +1,12 @@
-package com.example.jh.hireader.adapter;
+package com.example.jh.hireader.ui.adapter;
 
 import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-import com.example.jh.hireader.fragment.GuokrFragment;
-import com.example.jh.hireader.fragment.ZhihuDailyFragment;
+import com.example.jh.hireader.ui.fragment.GuokrFragment;
+import com.example.jh.hireader.ui.fragment.ZhihuDailyFragment;
 
 /**
  * Created by jinhui  on 2017/4/21

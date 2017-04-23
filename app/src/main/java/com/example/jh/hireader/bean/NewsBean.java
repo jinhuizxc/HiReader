@@ -1,4 +1,4 @@
-package com.example.jh.hireader.news;
+package com.example.jh.hireader.bean;
 
 import java.util.List;
 

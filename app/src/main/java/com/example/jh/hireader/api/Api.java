@@ -17,4 +17,9 @@ public class Api {
     public static final String GUOKR_ARTICLE_LINK = "http://jingxuan.guokr.com/";
     // 知乎每日
     public static final String ZHIHU_HISTORY = "http://news.at.zhihu.com/";
+    // 果壳文章
+    public static final String GUOKR_ARTICLES = "http://apis.guokr.com/handpick/";
+    // 历史上的今天api
+    public static final String TODAY_HISTORY = "http://api.juheapi.com/japi/";
+
 }

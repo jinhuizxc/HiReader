@@ -2,7 +2,7 @@ package com.example.jh.hireader.interfaces;
 
 import com.example.jh.hireader.base.BasePresenter;
 import com.example.jh.hireader.base.BaseView;
-import com.example.jh.hireader.news.NewsBean;
+import com.example.jh.hireader.bean.NewsBean;
 
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package com.example.jh.hireader.ui;
+package com.example.jh.hireader.ui.activity;
 
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
@@ -13,9 +13,11 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.example.jh.hireader.R;
-import com.example.jh.hireader.fragment.ChatFragment;
-import com.example.jh.hireader.fragment.NewsFragment;
-import com.example.jh.hireader.fragment.ZhihuGuokrMainFragment;
+import com.example.jh.hireader.presenter.TodayOfHistoryPresenter;
+import com.example.jh.hireader.ui.fragment.ChatFragment;
+import com.example.jh.hireader.ui.fragment.NewsFragment;
+import com.example.jh.hireader.ui.fragment.TodayOfHistoryFragment;
+import com.example.jh.hireader.ui.fragment.ZhihuGuokrMainFragment;
 
 /**
  * 目前项目buildToolsVersion "25.0.2",没有25.0.3版本达不到
@@ -36,6 +38,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private NewsFragment newsFragment;
     //聊天机器人
     private ChatFragment chatFragment;
+    // 历史上的今天
+    private TodayOfHistoryFragment todayOfHistoryFragment;
+    private TodayOfHistoryPresenter todayOfHistoryPresenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,13 +50,18 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         // fragment对象的初始化以及添加fragment到布局中
         chatFragment = ChatFragment.newIntance();
         newsFragment = NewsFragment.newInstance();
+        todayOfHistoryFragment = TodayOfHistoryFragment.newInstance();
         zhihuGuokrMainFragment = ZhihuGuokrMainFragment.newInstance();
+        todayOfHistoryPresenter = new TodayOfHistoryPresenter(MainActivity.this,todayOfHistoryFragment);
         // 添加Fragment 到 FrameLayout
         if (!newsFragment.isAdded()) {
             getSupportFragmentManager().beginTransaction().add(R.id.fl, newsFragment, "newsFragment").commit();
         }
         if(!zhihuGuokrMainFragment.isAdded()){
             getSupportFragmentManager().beginTransaction().add(R.id.fl, zhihuGuokrMainFragment,"MainFragment").commit();
+        }
+        if(!todayOfHistoryFragment.isAdded()){
+            getSupportFragmentManager().beginTransaction().add(R.id.fl,todayOfHistoryFragment,"todyFragment").commit();
         }
         if (!chatFragment.isAdded()) {     // main_container
             getSupportFragmentManager().beginTransaction().add(R.id.fl, chatFragment, "chatFragment").commit();
@@ -130,6 +140,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             showMainFragment();
         } else if (id == R.id.nav_todayofhistory) {
             // 历史上的今天
+            showTodayOfHitoryFragment();
         } else if (id == R.id.nav_chat) {
             // 聊天机器人
             showChatFragment();
@@ -152,7 +163,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         fragmentTransaction.show(newsFragment);
         fragmentTransaction.hide(chatFragment);
         fragmentTransaction.hide(zhihuGuokrMainFragment);
-//        fragmentTransaction.hide(todayOfHistoryFragment);
+        fragmentTransaction.hide(todayOfHistoryFragment);
 //        fragmentTransaction.hide(weatherFragment);
         fragmentTransaction.commit();
         toolbar.setTitle("新闻资讯");
@@ -161,7 +172,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private void showMainFragment() {
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.show(zhihuGuokrMainFragment);
-//        fragmentTransaction.hide(todayOfHistoryFragment);
+        fragmentTransaction.hide(todayOfHistoryFragment);
         fragmentTransaction.hide(newsFragment);
         fragmentTransaction.hide(chatFragment);
 //        fragmentTransaction.hide(weatherFragment);
@@ -173,11 +184,24 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.show(chatFragment);
         fragmentTransaction.hide(newsFragment);
-//        fragmentTransaction.hide(todayOfHistoryFragment);
+        fragmentTransaction.hide(todayOfHistoryFragment);
         fragmentTransaction.hide(zhihuGuokrMainFragment);
 //        fragmentTransaction.hide(weatherFragment);
         fragmentTransaction.commit();
-
         toolbar.setTitle("聊天机器人");
+    }
+
+    private void showTodayOfHitoryFragment() {
+
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.show(todayOfHistoryFragment);
+        fragmentTransaction.hide(zhihuGuokrMainFragment);
+        fragmentTransaction.hide(newsFragment);
+        fragmentTransaction.hide(chatFragment);
+//        fragmentTransaction.hide(weatherFragment);
+        fragmentTransaction.commit();
+
+        toolbar.setTitle("历史上的今天");
+
     }
 }

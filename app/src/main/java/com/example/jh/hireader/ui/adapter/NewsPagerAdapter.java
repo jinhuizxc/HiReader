@@ -1,4 +1,4 @@
-package com.example.jh.hireader.adapter;
+package com.example.jh.hireader.ui.adapter;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;

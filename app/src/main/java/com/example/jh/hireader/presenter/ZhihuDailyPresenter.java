@@ -1,14 +1,16 @@
 package com.example.jh.hireader.presenter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 
 import com.example.jh.hireader.api.Api;
 import com.example.jh.hireader.api.ApiService;
 import com.example.jh.hireader.bean.StoriesBean;
 import com.example.jh.hireader.bean.ZhihuDailyBean;
-import com.example.jh.hireader.fragment.ZhihuDailyFragment;
+import com.example.jh.hireader.commons.BeanType;
 import com.example.jh.hireader.interfaces.ZhihuDailyContract;
+import com.example.jh.hireader.ui.activity.WebViewDetailActivity;
 import com.example.jh.hireader.utils.DateFormatUtils;
 import com.example.jh.hireader.utils.HttpUtils;
 import com.orhanobut.logger.Logger;
@@ -27,7 +29,7 @@ import io.reactivex.schedulers.Schedulers;
  * 邮箱: 1004260403@qq.com
  */
 
-public class ZhihuDailyPresenter implements ZhihuDailyContract.Presenter{
+public class ZhihuDailyPresenter implements ZhihuDailyContract.Presenter {
 
     private static final String TAG = "ZhihuDailyPresenter";
     private Context mContext;
@@ -47,11 +49,11 @@ public class ZhihuDailyPresenter implements ZhihuDailyContract.Presenter{
         requestData(Calendar.getInstance().getTimeInMillis(), true);
     }
 
-    boolean is;
     @Override
     public void requestData(long date, final boolean clearing) {
+        Log.e(TAG, "date =" + date); // 1492923779851
         DateFormatUtils dateFormat = new DateFormatUtils();
-        if(clearing){
+        if (clearing) {
             Log.e(TAG, "clearing =" + clearing);
             view.showLoading();
         }
@@ -64,7 +66,7 @@ public class ZhihuDailyPresenter implements ZhihuDailyContract.Presenter{
                 .subscribe(new Consumer<ZhihuDailyBean>() {
                     @Override
                     public void accept(ZhihuDailyBean zhihuDailyBean) throws Exception {
-                        Log.e(TAG,"获取内容 =" + zhihuDailyBean.toString());
+                        Log.e(TAG, "获取内容 =" + zhihuDailyBean.toString());
                         if (clearing) {
                             list.clear();
                         }
@@ -92,11 +94,16 @@ public class ZhihuDailyPresenter implements ZhihuDailyContract.Presenter{
 
     @Override
     public void loadMore(long date) {
-        requestData(date,false);
+        requestData(date, false);
     }
 
     @Override
     public void loadDetail(int position) {
-
+        Intent intent = new Intent(mContext, WebViewDetailActivity.class);
+        Logger.d(list.get(position).getId());
+        intent.putExtra("id", list.get(position).getId() + "");
+        intent.putExtra("type", BeanType.TYPE_ZHIHU);
+        Logger.d(position);
+        mContext.startActivity(intent);
     }
 }

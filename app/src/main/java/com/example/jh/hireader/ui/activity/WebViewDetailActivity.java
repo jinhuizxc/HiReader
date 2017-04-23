@@ -1,4 +1,4 @@
-package com.example.jh.hireader.ui;
+package com.example.jh.hireader.ui.activity;
 
 import android.content.ClipData;
 import android.content.ClipboardManager;
@@ -33,7 +33,7 @@ import com.example.jh.hireader.api.Api;
 import com.example.jh.hireader.api.ApiService;
 import com.example.jh.hireader.commons.BeanType;
 import com.example.jh.hireader.utils.HttpUtils;
-import com.example.jh.hireader.zhihudetail.ZhihuDetailBean;
+import com.example.jh.hireader.bean.ZhihuDetailBean;
 import com.orhanobut.logger.Logger;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -55,7 +55,9 @@ public class WebViewDetailActivity extends AppCompatActivity {
     private LayoutInflater layoutInflater;
     private WebSettings mWebViewSettings;
     private int mType;
-    private String mUrl="https://github.com/w77996";
+//    private String mUrl = "https://github.com/w77996";
+    private String mUrl = "https://github.com/jinhuizxc";
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,17 +65,17 @@ public class WebViewDetailActivity extends AppCompatActivity {
         initView();
         layoutInflater = LayoutInflater.from(this);
         Intent intent = getIntent();
-        mType = intent.getIntExtra("type",1);
+        mType = intent.getIntExtra("type", 1);
         // mWebView.setWebViewClient(new webViewClient());
         String id;
         String url;
-        switch (mType){
+        switch (mType) {
             case BeanType.TYPE_ZHIHU:
-                id= intent.getStringExtra("id");
-                url= Api.ZHIHU_NEWS+id;
-
+                id = intent.getStringExtra("id");
+//                url = Api.ZHIHU_NEWS + id;
+                // 再次请求url
                 HttpUtils.getInstance()
-                        .create(ApiService.class,Api.ZHIHU_NEWS)
+                        .create(ApiService.class, Api.ZHIHU_NEWS)
                         .getZhihuDetailNews(id)
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
@@ -82,29 +84,30 @@ public class WebViewDetailActivity extends AppCompatActivity {
                             public void accept(ZhihuDetailBean zhihuDetailBean) throws Exception {
                                 String url = zhihuDetailBean.getShare_url();
                                 Logger.d(url);
-                                mUrl =url;
+                                mUrl = url;
                                 mWebView.loadUrl(url);
                             }
                         }, new Consumer<Throwable>() {
                             @Override
                             public void accept(Throwable throwable) throws Exception {
-                                Logger.e(throwable+"");
+                                Logger.e(throwable + "");
                             }
                         });
                 break;
             case BeanType.TYPE_GUOKR:
-                id= intent.getStringExtra("id");
-                url = Api.GUOKR_ARTICLE_LINK+"pick/"+id;
+                id = intent.getStringExtra("id");
+                url = Api.GUOKR_ARTICLE_LINK + "pick/" + id;
+                // http://jingxuan.guokr.com/pick/82611
                 Logger.d(url);
-                mUrl =url;
+                mUrl = url;
                 mWebView.loadUrl(url);
                 break;
             case BeanType.TYPE_HISTORY:
 
                 break;
             case BeanType.TYPE_NEWS:
-                id= intent.getStringExtra("link");
-                mUrl =id;
+                id = intent.getStringExtra("link");
+                mUrl = id;
                 mWebView.loadUrl(id);
                 break;
         }
@@ -120,18 +123,28 @@ public class WebViewDetailActivity extends AppCompatActivity {
         // mTitle = (TextView) findViewById(R.id.tv_title);
         mProgressBar = (ProgressBar) findViewById(R.id.progressbar);
         mProgress = (ProgressBar) findViewById(R.id.pb_progress);
-        mToolbar = (Toolbar)findViewById(R.id.webview_toolbar);
+        mToolbar = (Toolbar) findViewById(R.id.webview_toolbar);
         setSupportActionBar(mToolbar);
         ActionBar actionBar = getSupportActionBar();
-        if (actionBar != null) actionBar.setDisplayHomeAsUpEnabled(true);
+        if (actionBar != null)
+            actionBar.setDisplayHomeAsUpEnabled(true);
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_more, menu);
+        return true;
+    }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        // 返回键！
         if (item.getItemId() == android.R.id.home) {
             onBackPressed();
             return true;
-        } else if (item.getItemId() ==R.id.action_more){
+        }else if (item.getItemId() == R.id.action_more) {
             Logger.d("fasdf");
+            // 底部对话框
             final BottomSheetDialog dialog = new BottomSheetDialog(this);
 
             View view = layoutInflater.inflate(R.layout.menu_sheet, null);
@@ -157,15 +170,15 @@ public class WebViewDetailActivity extends AppCompatActivity {
                 }
             });
 
-     /*       // copy the text content to clipboard
-            view.findViewById(R.id.layout_copy_text).setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    dialog.dismiss();
-                   // presenter.copyText();
-                }
-            });*/
-
+//     /*       // copy the text content to clipboard
+//            view.findViewById(R.id.layout_copy_text).setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    dialog.dismiss();
+//                   // presenter.copyText();
+//                }
+//            });*/
+//
             // shareAsText the content as text
             view.findViewById(R.id.layout_share_text).setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -183,17 +196,14 @@ public class WebViewDetailActivity extends AppCompatActivity {
             dialog.setContentView(view);
             dialog.show();
             return true;
-        }else{
+        } else {
             return super.onOptionsItemSelected(item);
         }
     }
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_more, menu);
-        return true;
-    }
-    private void initWebSettings() {
 
+
+
+    private void initWebSettings() {
         mWebViewSettings.setJavaScriptEnabled(true);
         mWebViewSettings.setCacheMode(WebSettings.LOAD_DEFAULT);
         mWebViewSettings.setDomStorageEnabled(true);
@@ -214,7 +224,7 @@ public class WebViewDetailActivity extends AppCompatActivity {
         //mWebView.loadUrl(mUrl);
         mWebViewSettings = mWebView.getSettings();
 
-        if (Build.VERSION.SDK_INT >= 19){
+        if (Build.VERSION.SDK_INT >= 19) {
             // 对于系统API在19以上的版本做了兼容。因为4.4以上的系统在
             // onPageFinished时再恢复图片加载，如果存在多张图片引用的
             // 是相同的src时，会只有一个image标签得到加载，因而对于这样的系统我们就先直接加载。
@@ -232,8 +242,9 @@ public class WebViewDetailActivity extends AppCompatActivity {
             }
         });
     }
+
     private void initWebChromeClient() {
-        mWebView.setWebChromeClient(new WebChromeClient(){
+        mWebView.setWebChromeClient(new WebChromeClient() {
 
             @Override
             public void onProgressChanged(WebView view, int newProgress) {
@@ -241,8 +252,9 @@ public class WebViewDetailActivity extends AppCompatActivity {
             }
         });
     }
+
     private void initWebViewClient() {
-        mWebView.setWebViewClient(new WebViewClient(){
+        mWebView.setWebViewClient(new WebViewClient() {
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
 
@@ -276,7 +288,7 @@ public class WebViewDetailActivity extends AppCompatActivity {
                 mProgressBar.setVisibility(View.GONE);
                 mProgress.setVisibility(View.GONE);
                 mToolbar.setTitle(view.getTitle());
-                if (!mWebViewSettings.getLoadsImagesAutomatically()){
+                if (!mWebViewSettings.getLoadsImagesAutomatically()) {
                     mWebViewSettings.setLoadsImagesAutomatically(true);
                 }
             }
@@ -289,6 +301,7 @@ public class WebViewDetailActivity extends AppCompatActivity {
             }
         });
     }
+
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         // mWebView.canGoBack() 在WebView含有一个可后退的浏览记录时返回true
@@ -300,11 +313,12 @@ public class WebViewDetailActivity extends AppCompatActivity {
     }
 
     public void copyLink() {
+        // 复制文本内容！ClipboardManager
         ClipboardManager manager = (ClipboardManager) getApplication().getSystemService(CLIPBOARD_SERVICE);
         ClipData clipData = null;
         clipData = ClipData.newPlainText("text", mUrl);
         manager.setPrimaryClip(clipData);
-        Toast.makeText(getApplicationContext(),"已复制链接至粘贴板",Toast.LENGTH_SHORT).show();
+        Toast.makeText(getApplicationContext(), "已复制链接至粘贴板", Toast.LENGTH_SHORT).show();
     }
 }
 

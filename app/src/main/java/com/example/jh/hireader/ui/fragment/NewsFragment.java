@@ -1,8 +1,7 @@
-package com.example.jh.hireader.fragment;
+package com.example.jh.hireader.ui.fragment;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
@@ -11,7 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.jh.hireader.R;
-import com.example.jh.hireader.adapter.NewsPagerAdapter;
+import com.example.jh.hireader.ui.adapter.NewsPagerAdapter;
 
 /**
  * Created by jinhui  on 2017/4/20
@@ -37,7 +36,7 @@ public class NewsFragment extends Fragment {
 
     private TabLayout tabLayout;
     private ViewPager viewPager;
-    private FloatingActionButton floatingActionButton;
+//    private FloatingActionButton floatingActionButton;
 
     public static NewsFragment newInstance(){
         return new NewsFragment();
@@ -57,8 +56,8 @@ public class NewsFragment extends Fragment {
         tabLayout.setTabMode(TabLayout.MODE_SCROLLABLE);
         viewPager = (ViewPager)view.findViewById(R.id.fragment_main_viewpager);
         viewPager.setOffscreenPageLimit(4);
-        floatingActionButton = (FloatingActionButton)view.findViewById(R.id.fragment_main_fab);
-        floatingActionButton.hide();        // 隐藏FloatingActionButton
+//        floatingActionButton = (FloatingActionButton)view.findViewById(R.id.fragment_main_fab);
+//        floatingActionButton.hide();        // 隐藏FloatingActionButton
         NewsPagerAdapter newsPagerAdapter = new NewsPagerAdapter(getChildFragmentManager());
         newsPagerAdapter.addFragment(NewsListFragment.getInstance(TYPE_DOMESTIC),TYPE_DOMESTIC);
         newsPagerAdapter.addFragment(NewsListFragment.getInstance(TYPE_INTERNETIONAL),TYPE_INTERNETIONAL);

@@ -7,8 +7,8 @@ import com.example.jh.hireader.api.Api;
 import com.example.jh.hireader.api.ApiService;
 import com.example.jh.hireader.commons.BeanType;
 import com.example.jh.hireader.interfaces.NewsListContract;
-import com.example.jh.hireader.news.NewsBean;
-import com.example.jh.hireader.ui.WebViewDetailActivity;
+import com.example.jh.hireader.bean.NewsBean;
+import com.example.jh.hireader.ui.activity.WebViewDetailActivity;
 import com.example.jh.hireader.utils.HttpUtils;
 import com.orhanobut.logger.Logger;
 

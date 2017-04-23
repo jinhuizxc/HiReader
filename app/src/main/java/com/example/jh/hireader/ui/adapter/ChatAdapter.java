@@ -1,4 +1,4 @@
-package com.example.jh.hireader.adapter;
+package com.example.jh.hireader.ui.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;

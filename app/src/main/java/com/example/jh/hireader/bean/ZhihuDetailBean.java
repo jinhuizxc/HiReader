@@ -1,4 +1,4 @@
-package com.example.jh.hireader.zhihudetail;
+package com.example.jh.hireader.bean;
 
 import java.util.List;
 
